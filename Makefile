@@ -8,7 +8,7 @@ start_frontend:
 
 # -- Start backend
 start_backend:
-	cargo loco start
+	cargo loco watch 
 
 
 # Below commands need `cargo install sea-orm-cli`
