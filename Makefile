@@ -9,3 +9,9 @@ start_frontend:
 # -- Start backend
 start_backend:
 	cargo loco start
+
+
+# Below commands need `cargo install sea-orm-cli`
+# -- generate some resource for API
+generate_post:
+	cargo loco generate scaffold post title:string content:text --api
