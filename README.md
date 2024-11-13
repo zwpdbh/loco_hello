@@ -5,7 +5,6 @@
 This is the **SaaS starter** which includes a `User` model and authentication based on JWT.
 It also include configuration sections that help you pick either a frontend or a server-side template set up for your fullstack server.
 
-
 ## Quick Start
 
 ```sh
