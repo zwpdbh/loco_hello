@@ -7,6 +7,9 @@
 debug/
 target/
 
+# NOT include the frontend/dist folder 
+frontend/dist/
+
 # include cargo lock
 !Cargo.lock
 
