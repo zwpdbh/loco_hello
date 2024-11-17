@@ -1,64 +1,40 @@
+use super::m20241113_065545_posts::Posts;
 use sea_orm_migration::{prelude::*, schema::*};
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
 
 #[derive(DeriveIden)]
-enum Movies {
+enum Files {
     Table,
-    Rating,
+    Id,
+    PostId,
+    FilePath,
 }
 
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        //
-        // add column
-        //
-        /*
         manager
-            .alter_table(
-                Table::alter()
-                    .table(Movies::Table)
-                    .add_column_if_not_exists(integer(Movies::Rating))
+            .create_table(
+                table_auto(Files::Table)
+                    .col(pk_auto(Files::Id))
+                    .col(integer(Files::PostId))
+                    .col(string(Files::FilePath))
+                    .foreign_key(
+                        ForeignKey::create()
+                            .name("FK_files_posts_id")
+                            .from(Files::Table, Files::PostId)
+                            .to(Posts::Table, Posts::Id),
+                    )
                     .to_owned(),
             )
             .await
-        */
-
-        //
-        // delete column
-        //
-        /*
-        manager
-            .alter_table(
-                Table::alter()
-                    .table(Movies::Table)
-                    .drop_column(Movies::Rating)
-                    .to_owned(),
-            )
-            .await
-        */
-
-        //
-        // create index
-        //
-        /*
-        manager
-            .create_index(
-                Index::create()
-                    .name("idx-movies-rating")
-                    .table(Movies::Table)
-                    .col(Movies::Rating)
-                    .to_owned(),
-            )
-            .await;
-        */
-        todo!()
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
-        Ok(())
+        manager
+            .drop_table(Table::drop().table(Files::Table).to_owned())
+            .await
     }
 }
-
