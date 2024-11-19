@@ -26,12 +26,9 @@ impl MigrationTrait for Migration {
 }
 
 #[derive(DeriveIden)]
-enum Posts {
+pub enum Posts {
     Table,
     Id,
     Title,
     Content,
-    
 }
-
-
