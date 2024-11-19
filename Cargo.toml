@@ -41,6 +41,22 @@ fluent-templates = { version = "0.8.0", features = ["tera"] }
 unic-langid = "0.9.4"
 # /view engine
 
+# region:      --- Adding GraphQL Support to Loco with Seaography
+seaography = { version = "1.0.0-rc.4", features = [
+  "with-decimal",
+  "with-chrono",
+] }
+async-graphql = { version = "7.0", features = [
+  "decimal",
+  "chrono",
+  "dataloader",
+  "dynamic-schema",
+] }
+async-graphql-axum = { version = "7.0" }
+lazy_static = { version = "1.4" }
+tower-service = { version = "0.3" }
+# endregion:   --- Adding GraphQL Support to Loco with Seaography
+
 [[bin]]
 name = "loco_hello-cli"
 path = "src/bin/main.rs"
