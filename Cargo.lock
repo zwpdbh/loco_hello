@@ -2604,6 +2604,7 @@ dependencies = [
  "serde_json",
  "serial_test",
  "tokio",
+ "tokio-util",
  "tracing",
  "tracing-subscriber",
  "unic-langid",
