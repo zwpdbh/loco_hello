@@ -4,18 +4,49 @@
 use std::path::PathBuf;
 
 use crate::models::_entities::files;
+use axum::body::Body;
 use axum::{debug_handler, extract::Multipart};
 use loco_rs::prelude::*;
+use sea_orm::QueryOrder;
 use tokio::fs;
 use tokio::io::AsyncWriteExt;
-
+use tokio_util::io::ReaderStream;
 mod config {
     // pub const UPLOAD_DIR: &'static str = "/home/zw/code/tmp";
     pub const UPLOAD_DIR: &'static str = "/mnt/d/download";
 }
 
 #[debug_handler]
+pub async fn view(Path(file_id): Path<i32>, State(ctx): State<AppContext>) -> Result<Response> {
+    // Fetch the file info from database
+    let file = files::Entity::find_by_id(file_id)
+        .one(&ctx.db)
+        .await?
+        .expect("File not found");
+
+    // Stream the file
+    let file = fs::File::open(format!("{}/{}", config::UPLOAD_DIR, file.file_path)).await?;
+    let stream = ReaderStream::new(file);
+    let body = Body::from_stream(stream);
+
+    Ok(format::render().response().body(body)?)
+}
+
+#[debug_handler]
+pub async fn list(Path(post_id): Path<i32>, State(ctx): State<AppContext>) -> Result<Response> {
+    // Fetch all files uploaded for a specific notes
+    let files = files::Entity::find()
+        .filter(files::Column::PostId.eq(post_id))
+        .order_by_asc(files::Column::Id)
+        .all(&ctx.db)
+        .await?;
+
+    format::json(files)
+}
+
+#[debug_handler]
 pub async fn upload(
+    //  _auth: auth::JWT, // enable auth if needed
     Path(post_id): Path<i32>,
     State(ctx): State<AppContext>,
     mut multipart: Multipart,
@@ -84,5 +115,7 @@ pub async fn upload(
 pub fn routes() -> Routes {
     Routes::new()
         .prefix("api/files/")
-        .add("/upload/:posts_id", post(upload))
+        .add("/upload/:post_id", post(upload))
+        .add("/list/:post_id", get(list))
+        .add("/view/:file_id", get(view))
 }
