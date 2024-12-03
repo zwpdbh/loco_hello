@@ -15,7 +15,7 @@ reset_db:
 # rustup target add wasm32-unknown-unknown
 # cargo install --locked trunk
 start_frontend:
-	cd frontend && trunk serve --watch src
+	cd frontend && dx serve
 
 # -- Start backend
 start_backend:
