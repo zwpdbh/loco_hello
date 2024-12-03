@@ -50,6 +50,7 @@ impl Hooks for App {
             .add_route(controllers::post::routes())
             .add_route(controllers::file::routes())
             .add_route(controllers::auth::routes())
+            .add_route(controllers::graphql::routes())
     }
 
     async fn connect_workers(ctx: &AppContext, queue: &Queue) -> Result<()> {
