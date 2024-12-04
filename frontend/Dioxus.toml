@@ -31,7 +31,8 @@ watch_path = ["src", "assets"]
 
 # CSS style file
 
-style = ["/tailwind.css"]
+# style = ["/tailwind.css"]
+style = ["https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css"]
 
 # Javascript code file
 script = []

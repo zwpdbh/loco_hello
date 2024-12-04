@@ -8,7 +8,22 @@ edition = "2021"
 
 [dependencies]
 
+# region:      --- comment packages shared in workspace
 dioxus = { version = "0.5", features = ["web", "router"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+futures-util = { workspace = true }
+chrono = { workspace = true }
+reqwest = { workspace = true }
+tracing = { workspace = true }
+# endregion:   --- comment packages shared in workspace
+
+
+gloo-timers = { version = "0.3", features = ["futures"] }
+dioxus-free-icons = { version = "0.8.0", features = [
+  "font-awesome-brands",
+  "bootstrap",
+] }
 
 # Debug
 dioxus-logger = "0.5.1"
