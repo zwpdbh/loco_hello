@@ -16,12 +16,19 @@ pub fn DemoResource() -> Element {
     )
 }
 
+#[derive(Deserialize)]
+pub struct ApiResponse {
+    #[serde(rename = "message")]
+    image_url: String,
+}
+
 pub async fn get_pic() -> Result<ApiResponse, Error> {
-    reqwest::get("https://dog.ceo/api/breeds/image/random")
+    let v: Result<ApiResponse, Error> = reqwest::get("https://dog.ceo/api/breeds/image/random")
         .await
         .unwrap()
         .json::<ApiResponse>()
-        .await
+        .await;
+    v
 }
 
 #[component]
@@ -49,10 +56,4 @@ pub fn DemoApiRequest() -> Element {
             div { "Loading dogs..." }
         },
     }
-}
-
-#[derive(Deserialize)]
-pub struct ApiResponse {
-    #[serde(rename = "message")]
-    image_url: String,
 }

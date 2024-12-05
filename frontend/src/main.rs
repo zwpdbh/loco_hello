@@ -5,6 +5,7 @@ use routes::Route;
 use tracing::Level;
 
 mod components;
+mod error;
 mod pages;
 mod routes;
 
