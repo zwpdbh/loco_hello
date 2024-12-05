@@ -13,7 +13,7 @@ pub fn NavBar() -> Element {
             div { class: "navbar-menu", id: "navbarBasicExample",
                 div { class: "navbar-start",
                     Link { class: "navbar-item", to: Route::Home {}, "Home" }
-                    Link { class: "navbar-item", to: Route::BlogList {},
+                    Link { class: "navbar-item", to: Route::PostList {},
                         {},
                         "Blog List"
                     }

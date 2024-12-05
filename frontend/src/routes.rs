@@ -2,6 +2,8 @@
 use dioxus::prelude::*;
 
 use crate::components::*;
+use crate::pages::blog::*;
+use crate::pages::demos::*;
 
 #[rustfmt::skip]
 #[derive(Clone, Routable, Debug, PartialEq)]
@@ -15,10 +17,13 @@ pub enum Route {
         #[nest("/blog")]
             #[layout(Blog)]
                 #[route("/")]
-                BlogList {},
+                PostList {},
 
-                #[route("/post/:name")]
-                BlogPost { name: String },
+                #[route("/post/:id")]
+                PostRead {id: String},
+
+                #[route("/post")]
+                PostCreate {},
             #[end_layout]
         #[end_nest]
 
@@ -64,10 +69,10 @@ pub enum Route {
         #[end_nest]
     #[end_layout]
 
-    // This will redirect user to /blog or /blog/post/:name 
+    // This will redirect user to /blog or /blog/post/:id 
     #[nest("/myblog")]
-        #[redirect("/", || Route::BlogList {})]
-        #[redirect("/:name", |name: String| Route::BlogPost { name })]
+        #[redirect("/", || Route::PostList {})]
+        #[redirect("/:id", |id: String| Route::PostRead { id })]
     #[end_nest]
 
     // #[route("/acstor")]

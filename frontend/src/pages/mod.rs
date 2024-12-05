@@ -1,8 +1,9 @@
 #![allow(non_snake_case)]
+// pub use crate::components::NavBar;
 use dioxus::prelude::*;
-pub use navbar::NavBar;
 
-mod navbar;
+pub mod blog;
+pub mod demos;
 
 #[component]
 pub fn Home() -> Element {

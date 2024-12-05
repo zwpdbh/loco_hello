@@ -2,17 +2,29 @@
 use crate::routes::Route;
 use dioxus::prelude::*;
 
-pub mod async_with_coroutines;
-pub mod async_with_resource;
-pub mod async_with_spawn;
-pub mod context;
-pub mod dynamic_rendering;
-pub mod event_handler;
-pub mod hooks;
-pub mod llm;
-pub mod prop;
-pub mod rsx_basic;
-pub mod user_input;
+mod async_with_coroutines;
+mod async_with_resource;
+mod async_with_spawn;
+mod context;
+mod dynamic_rendering;
+mod event_handler;
+mod hooks;
+mod llm;
+mod prop;
+mod rsx_basic;
+mod user_input;
+
+pub use async_with_coroutines::DemoCoroutines;
+pub use async_with_resource::DemoResource;
+pub use async_with_spawn::DemoSpawn;
+pub use context::DemoContext;
+pub use dynamic_rendering::DemoDynamicRendering;
+pub use event_handler::DemoEventHandler;
+pub use hooks::DemoHooks;
+pub use llm::DemoLLM;
+pub use prop::DemoProp;
+pub use rsx_basic::RsxBasic;
+pub use user_input::UserInput;
 
 /// Place holder for Demo section
 #[component]
