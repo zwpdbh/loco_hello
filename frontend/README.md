@@ -15,3 +15,29 @@ dx serve --hot-reload
 ```
 
 - Open the browser to http://localhost:8080
+
+
+## How to install tailwind css
+
+- Install npx 
+
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+source ~/.bashrc
+nvm list-remote
+
+nvm install <version>
+```
+
+- Generate tailwind.css file 
+
+Based on the `Dioxus.toml` file definition for css 
+``` toml 
+style = ["/tailwind.css"]
+```
+
+Generate the tailwind.css file given `tailwind.config.js` and `input.css` is prepared from Dioxus, we only need to run: 
+
+```sh
+npx tailwindcss -i ./input.css -o ./tailwind.css --watch
+```
