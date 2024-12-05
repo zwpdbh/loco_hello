@@ -1,8 +1,11 @@
 #![allow(non_snake_case)]
 use dioxus::prelude::*;
-pub use navbar::NavBar;
 
 mod navbar;
+pub use navbar::NavBar;
+
+mod form;
+pub use form::*;
 
 #[component]
 pub fn Home() -> Element {
