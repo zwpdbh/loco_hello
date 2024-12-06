@@ -31,7 +31,7 @@ pub async fn create_post(title: &str, content: &str) -> Result<PostCreated> {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub enum CreatedPost {
+pub enum CreatePostResult {
     NotStarted,
     InProgress,
     Finished(PostCreated),
@@ -43,19 +43,19 @@ pub fn PostCreate() -> Element {
     let mut title = use_signal(|| "".to_string());
     let mut content = use_signal(|| "".to_string());
 
-    let mut created_post = use_signal(|| CreatedPost::NotStarted);
+    let mut created_post_result = use_signal(|| CreatePostResult::NotStarted);
     // let mut create_post_future: Resource<Result<PostCreated>> =
     //     use_resource(move || async move { create_post(&title(), &content()).await });
 
-    let post_created = move |_event: MouseEvent| {
+    let create_post_action = move |_event: MouseEvent| {
         info!("Submitting post - Title: {}, Content: {}", title, content);
         let _ = spawn(async move {
-            created_post.set(CreatedPost::InProgress);
+            created_post_result.set(CreatePostResult::InProgress);
 
             let post = create_post(&title(), &content()).await;
             match post {
-                Ok(post) => created_post.set(CreatedPost::Finished(post)),
-                Err(e) => created_post.set(CreatedPost::Error(e.to_string())),
+                Ok(post) => created_post_result.set(CreatePostResult::Finished(post)),
+                Err(e) => created_post_result.set(CreatePostResult::Error(e.to_string())),
             }
         });
     };
@@ -84,7 +84,7 @@ pub fn PostCreate() -> Element {
                 p { class: "control",
                     button {
                         class: "button is-primary",
-                        onclick: post_created,
+                        onclick: create_post_action,
                         prevent_default: "onclick",
                         "Submit"
                     }
@@ -93,24 +93,24 @@ pub fn PostCreate() -> Element {
         }
 
         // Render created post based on condition
-        CreatedPostStatus { created_post: created_post() }
+        RenderCreatePostResult { create_post_result: created_post_result() }
     )
 }
 
 #[component]
-fn CreatedPostStatus(created_post: CreatedPost) -> Element {
+fn RenderCreatePostResult(create_post_result: CreatePostResult) -> Element {
     rsx!(
         div { class: "mt-4",
             h2 { "Created Post Status" }
-            match created_post {
-                CreatedPost::NotStarted => rsx!(
+            match create_post_result {
+                CreatePostResult::NotStarted => rsx!(
                     p { "No post has been created yet." }
                 ),
-                CreatedPost::InProgress => rsx!(
+                CreatePostResult::InProgress => rsx!(
                     p { "Creating post..." }
                     // You could add a loading spinner here
                 ),
-                CreatedPost::Finished(post) => rsx!(
+                CreatePostResult::Finished(post) => rsx!(
                     div {
                         h3 { "Post Created Successfully" }
                         p { "Title: {post.title}" }
@@ -118,7 +118,7 @@ fn CreatedPostStatus(created_post: CreatedPost) -> Element {
                         p { "ID: {post.id}" }
                     }
                 ),
-                CreatedPost::Error(e) => rsx!(
+                CreatePostResult::Error(e) => rsx!(
                     div { class: "error",
                         h3 { "Error Creating Post" }
                         p { "An error occurred: {e}" }

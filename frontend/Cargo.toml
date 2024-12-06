@@ -16,6 +16,7 @@ futures-util = { workspace = true }
 chrono = { workspace = true }
 reqwest = { workspace = true }
 tracing = { workspace = true }
+dioxus-sortable = { version = "0.1.2" }
 # endregion:   --- comment packages shared in workspace
 
 
