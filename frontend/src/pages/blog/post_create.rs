@@ -9,7 +9,7 @@ use serde_json::json;
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct PostCreated {
-    id: String,
+    id: i32,
     title: String,
     content: String,
 }
