@@ -9,9 +9,9 @@ use serde_json::json;
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct PostCreated {
-    id: i32,
-    title: String,
-    content: String,
+    pub id: i32,
+    pub title: String,
+    pub content: String,
 }
 
 pub async fn create_post(title: &str, content: &str) -> Result<PostCreated> {
