@@ -2,25 +2,27 @@
 
 use dioxus::prelude::*;
 use routes::Route;
-use tracing::Level;
 
 mod components;
 mod error;
 mod pages;
 mod routes;
 
+const FAVICON: Asset = asset!("./assets/favicon.ico");
+const MAIN_CSS: Asset = asset!("./assets/styling/main.css");
+const TAILWIND_CSS: Asset = asset!("./assets/tailwind.css");
+
 fn App() -> Element {
     rsx! {
-        document::Stylesheet {
-            // Urls are relative to your Cargo.toml file
-            href: asset!("/assets/tailwind.css"),
-        }
+        // Global app resources
+        document::Link { rel: "icon", href: FAVICON }
+        document::Link { rel: "stylesheet", href: MAIN_CSS }
+        document::Link { rel: "stylesheet", href: TAILWIND_CSS }
         Router::<Route> {}
     }
 }
 
 fn main() {
     // Init logger
-    dioxus_logger::init(Level::INFO).expect("failed to init logger");
     launch(App);
 }

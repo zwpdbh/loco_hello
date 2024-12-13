@@ -3,7 +3,7 @@ use super::MyCard;
 use dioxus::prelude::*;
 use dioxus_free_icons::icons::fa_brands_icons::FaGithub;
 use dioxus_free_icons::Icon;
-use dioxus_logger::tracing::info;
+use tracing::info;
 
 /// Example from: https://github.com/fairjm/dioxus-openai-qa-gui
 #[component]
@@ -37,7 +37,7 @@ fn ControlledInput() -> Element {
                 // we tell the component what to render
                 value: "{name}",
                 // and what to do when the value changes
-                oninput: move |event| name.set(event.value())
+                oninput: move |event| name.set(event.value()),
             }
 
             p { "Your input is: {name}" }
@@ -94,7 +94,7 @@ fn HandleFile() -> Element {
                             }
                         }
                     }
-                }
+                },
             }
         }
     )
@@ -115,7 +115,12 @@ fn Nav() -> Element {
                         target: "_blank",
                         href: "https://github.com/fairjm/dioxus-openai-qa-gui",
                         span { class: "icon is-small",
-                            Icon { width: 24, height: 24, fill: "#6e7781", icon: FaGithub }
+                            Icon {
+                                width: 24,
+                                height: 24,
+                                fill: "#6e7781",
+                                icon: FaGithub,
+                            }
                         }
                         span { "GitHub" }
                     }

@@ -3,10 +3,10 @@
 use crate::components::{FormButton, FormInput};
 use crate::error::Result;
 use dioxus::prelude::*;
-use dioxus_logger::tracing::info;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use tracing::info;
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct PostCreated {

@@ -1,43 +1,27 @@
 # Development
 
+Your new jumpstart project includes basic organization with an organized `assets` folder and a `components` folder. 
+If you chose to develop with the router feature, you will also have a `views` folder.
+
+### Tailwind
 1. Install npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
-2. Install the tailwind css cli: https://tailwindcss.com/docs/installation
-3. Run the following command in the root of the project to start the tailwind CSS compiler:
+2. Install the Tailwind CSS CLI: https://tailwindcss.com/docs/installation
+3. Run the following command in the root of the project to start the Tailwind CSS compiler:
 
 ```bash
 npx tailwindcss -i ./input.css -o ./assets/tailwind.css --watch
 ```
 
-Run the following command in the root of the project to start the Dioxus dev server:
+### Serving Your App
+
+Run the following command in the root of your project to start developing with the default platform:
 
 ```bash
-dx serve --hot-reload
+dx serve
 ```
 
-- Open the browser to http://localhost:8080
-
-
-## How to install tailwind css
-
-- Install npx 
-
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-source ~/.bashrc
-nvm list-remote
-
-nvm install <version>
+To run for a different platform, use the `--platform platform` flag. E.g.
+```bash
+dx serve --platform desktop
 ```
 
-- Generate tailwind.css file 
-
-Based on the `Dioxus.toml` file definition for css 
-``` toml 
-style = ["/tailwind.css"]
-```
-
-Given both `tailwind.config.js` and `input.css` are already prepared from Dioxus, to generate the tailwind.css file we only need to run: 
-
-```sh
-npx tailwindcss -i ./input.css -o ./tailwind.css --watch
-```

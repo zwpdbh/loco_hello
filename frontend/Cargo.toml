@@ -7,9 +7,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+dioxus = { version = "0.6.0", features = ["router"] }
 
-# region:      --- comment packages shared in workspace
-dioxus = { version = "0.6", features = ["web", "router"] }
+# region:      --- Added by user 
 serde = { workspace = true }
 serde_json = { workspace = true }
 futures-util = { workspace = true }
@@ -17,14 +17,21 @@ chrono = { workspace = true }
 reqwest = { workspace = true }
 tracing = { workspace = true }
 dioxus-sortable = { version = "0.1.2" }
-# endregion:   --- comment packages shared in workspace
-
-
 gloo-timers = { version = "0.3", features = ["futures"] }
 dioxus-free-icons = { version = "0.9", features = [
   "font-awesome-brands",
   "bootstrap",
 ] }
 
-# Debug
-dioxus-logger = "0.6"
+# endregion:   --- Added by user 
+
+
+[features]
+default = ["web"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+
+
+[dev-dependencies]
+dioxus-cli = { version = "0.6" }

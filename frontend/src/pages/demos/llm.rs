@@ -3,7 +3,6 @@
 use super::MyCard;
 use crate::Route;
 use dioxus::prelude::*;
-use dioxus_logger::tracing::info;
 // use futures_util::io::Sink;
 
 use dioxus_free_icons::icons::fa_brands_icons::FaGithub;
@@ -15,6 +14,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 #[allow(unused)]
 use serde_json::Value;
+use tracing::info;
 
 #[component]
 pub fn DemoLLM() -> Element {
