@@ -1,3 +1,4 @@
+#![allow(unused)]
 mod form_button;
 pub use form_button::*;
 

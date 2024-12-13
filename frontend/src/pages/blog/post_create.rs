@@ -1,3 +1,4 @@
+#![allow(unused)]
 #![allow(non_snake_case)]
 use crate::components::{FormButton, FormInput};
 use crate::error::Result;
@@ -76,7 +77,7 @@ pub fn PostCreate() -> Element {
                 div { class: "control" }
                 input {
                     value: "{content}",
-                    oninput: move |e| content.set(e.value())
+                    oninput: move |e| content.set(e.value()),
                 }
             }
 
@@ -103,27 +104,26 @@ fn RenderCreatePostResult(create_post_result: CreatePostResult) -> Element {
         div { class: "mt-4",
             h2 { "Created Post Status" }
             match create_post_result {
-                CreatePostResult::NotStarted => rsx!(
+                CreatePostResult::NotStarted => rsx! {
                     p { "No post has been created yet." }
-                ),
-                CreatePostResult::InProgress => rsx!(
+                },
+                CreatePostResult::InProgress => rsx! {
                     p { "Creating post..." }
-                    // You could add a loading spinner here
-                ),
-                CreatePostResult::Finished(post) => rsx!(
+                },
+                CreatePostResult::Finished(post) => rsx! {
                     div {
                         h3 { "Post Created Successfully" }
                         p { "Title: {post.title}" }
                         p { "Content: {post.content}" }
                         p { "ID: {post.id}" }
                     }
-                ),
-                CreatePostResult::Error(e) => rsx!(
+                },
+                CreatePostResult::Error(e) => rsx! {
                     div { class: "error",
                         h3 { "Error Creating Post" }
                         p { "An error occurred: {e}" }
                     }
-                ),
+                },
             }
         }
     )

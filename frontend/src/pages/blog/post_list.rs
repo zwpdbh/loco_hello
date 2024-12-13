@@ -1,9 +1,8 @@
 #![allow(non_snake_case)]
-use super::post_create::{CreatePostResult, PostCreated};
+use super::post_create::PostCreated;
 use crate::error::Result;
 use dioxus::prelude::*;
-use dioxus_elements::{abbr, th};
-use dioxus_sortable::{use_sorter, NullHandling, PartialOrdBy, SortBy, Sortable, Th, ThStatus};
+use dioxus_sortable::{NullHandling, PartialOrdBy, SortBy, Sortable};
 use reqwest::Client;
 use tracing::info;
 
@@ -96,48 +95,33 @@ fn RenderGetPostsResult(get_posts_result: GetPostsResult) -> Element {
     rsx!(
         div { class: "mt-4",
             match get_posts_result {
-                GetPostsResult::NotStarted => rsx! {
-                    "No posts has been fetched"
-                },
+                GetPostsResult::NotStarted => rsx! { "No posts has been fetched" },
                 GetPostsResult::InProgress => rsx! {
                     p { "Getting posts..." }
                 },
                 GetPostsResult::Finished(posts) => rsx! {
-                    p {"successfully get posts: {posts.len()}"}
+                    p { "successfully get posts: {posts.len()}" }
 
                     table {
                         tr {
-                            th {
-                                "Id"
-                            }
-                            th {
-                                "Title"
-                            }
-                            th {
-                                "Content"
-                            }
+                            th { "Id" }
+                            th { "Title" }
+                            th { "Content" }
                         }
 
                         for post in posts {
                             tr {
-                                td {
-                                    "{post.id}"
-                                }
-                                td {
-                                    "{post.title}"
-                                }
-                                td {
-                                    "{post.content}"
-                                }
+                                td { "{post.id}" }
+                                td { "{post.title}" }
+                                td { "{post.content}" }
                             }
                         }
                     }
-
                 },
                 GetPostsResult::Error(e) => rsx! {
                     h3 { "Error Creating Post" }
                     p { "An error occurred: {e}" }
-                }
+                },
             }
         }
     )

@@ -1,9 +1,10 @@
 pub type Result<T> = core::result::Result<T, Error>;
 
+#[allow(unused)]
 #[derive(Debug)]
 pub enum Error {
     // TBC
-    Reqwest(reqwest::Error),
+    Http(reqwest::Error),
 }
 
 impl core::fmt::Display for Error {
@@ -16,6 +17,6 @@ impl std::error::Error for Error {}
 
 impl From<reqwest::Error> for Error {
     fn from(value: reqwest::Error) -> Self {
-        Self::Reqwest(value)
+        Self::Http(value)
     }
 }
