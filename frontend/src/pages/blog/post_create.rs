@@ -48,7 +48,9 @@ pub fn PostCreate() -> Element {
     // let mut create_post_future: Resource<Result<PostCreated>> =
     //     use_resource(move || async move { create_post(&title(), &content()).await });
 
-    let create_post_action = move |_event: MouseEvent| {
+    let create_post_action = move |event: MouseEvent| {
+        event.prevent_default();
+
         info!("Submitting post - Title: {}, Content: {}", title, content);
         let _ = spawn(async move {
             created_post_result.set(CreatePostResult::InProgress);
@@ -86,7 +88,6 @@ pub fn PostCreate() -> Element {
                     button {
                         class: "button is-primary",
                         onclick: create_post_action,
-                        prevent_default: "onclick",
                         "Submit"
                     }
                 }

@@ -30,7 +30,7 @@ enum CounterMsg {
 fn SimpleCoroutine() -> Element {
     let mut counter = use_signal(|| 0);
 
-    let update_counter = use_coroutine(|mut rx: UnboundedReceiver<CounterMsg>| async move {
+    let update_counter = use_coroutine(move |mut rx: UnboundedReceiver<CounterMsg>| async move {
         while let Some(msg) = rx.next().await {
             // simulate get result from api
             sleep(Duration::from_secs(3)).await;

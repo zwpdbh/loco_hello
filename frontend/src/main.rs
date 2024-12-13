@@ -11,6 +11,10 @@ mod routes;
 
 fn App() -> Element {
     rsx! {
+        document::Stylesheet {
+            // Urls are relative to your Cargo.toml file
+            href: asset!("/assets/tailwind.css"),
+        }
         Router::<Route> {}
     }
 }

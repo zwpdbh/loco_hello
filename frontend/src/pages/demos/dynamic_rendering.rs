@@ -20,7 +20,7 @@ pub fn DemoDynamicRendering() -> Element {
                         },
                         logout: move |is_logged_in| {
                             info!("Do something for logout, is_logged_in: {is_logged_in}");
-                        }
+                        },
                     }
                 }
                 li { RenderNothing {} }
@@ -79,7 +79,7 @@ fn RenderNothing() -> Element {
     let mut is_logged_in = use_context::<Signal<IsLoggedIn>>();
 
     if is_logged_in().0 {
-        return None;
+        return rsx!();
     }
 
     rsx! {
@@ -92,7 +92,7 @@ fn RenderNothing() -> Element {
                     oninput: move |event| {
                         let logged_in = event.value() == "true";
                         is_logged_in.write().0 = logged_in;
-                    }
+                    },
                 }
             }
         }
@@ -140,7 +140,7 @@ fn RenderingListV1() -> Element {
                 },
                 input {
                     value: "{comment_field}",
-                    oninput: move |event| comment_field.set(event.value())
+                    oninput: move |event| comment_field.set(event.value()),
                 }
                 input { r#type: "submit" }
             }
@@ -174,7 +174,7 @@ fn RenderingListV2() -> Element {
                 },
                 input {
                     value: "{comment_field}",
-                    oninput: move |event| comment_field.set(event.value())
+                    oninput: move |event| comment_field.set(event.value()),
                 }
                 input { r#type: "submit" }
             }

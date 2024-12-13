@@ -138,7 +138,7 @@ fn RenderSubmit() -> Element {
                     class: "delete",
                     onclick: move |_| {
                         error_msg.set("".to_string());
-                    }
+                    },
                 }
                 "{error_msg}"
             }
@@ -147,7 +147,7 @@ fn RenderSubmit() -> Element {
             article { class: "message mt-2",
                 div {
                     class: "message-body",
-                    dangerous_inner_html: "{response().content}"
+                    dangerous_inner_html: "{response().content}",
                 }
             }
         }
@@ -180,7 +180,7 @@ fn RenderSavePrompt() -> Element {
                         value: "{system_prompt()}",
                         oninput: move |evt| {
                             system_prompt.set(evt.value().clone());
-                        }
+                        },
                     }
                 }
                 div { class: "level {save_button_hidden} mt-1",
@@ -191,7 +191,7 @@ fn RenderSavePrompt() -> Element {
                                 placeholder: "prompt(overwrite existing)",
                                 r#type: "text",
                                 value: "{system_prompt_name()}",
-                                oninput: move |evt| { system_prompt_name.set(evt.value().clone()) }
+                                oninput: move |evt| { system_prompt_name.set(evt.value().clone()) },
                             }
                         }
                         div { class: "level-item",
@@ -226,7 +226,7 @@ fn RenderSavePrompt() -> Element {
                         value: "{prompt()}",
                         oninput: move |evt| {
                             prompt.set(evt.value().clone());
-                        }
+                        },
                     }
                 }
             }
@@ -267,7 +267,7 @@ fn RenderPrompt() -> Element {
                                 .filter(|v| { v.name != e_clone.name })
                                 .collect();
                             save_system_prompts(filtered_system_prompts);
-                        }
+                        },
                     }
                 }
             }
@@ -299,9 +299,19 @@ fn RenderPrompt() -> Element {
                                         span { "prompt列表" }
                                         span { class: "icon is-small",
                                             if system_prompt_dropdown().is_empty() {
-                                                Icon { width: 24, height: 24, fill: "#6e7781", icon: BsArrowDownShort }
+                                                Icon {
+                                                    width: 24,
+                                                    height: 24,
+                                                    fill: "#6e7781",
+                                                    icon: BsArrowDownShort,
+                                                }
                                             } else {
-                                                Icon { width: 24, height: 24, fill: "#6e7781", icon: BsArrowUpShort }
+                                                Icon {
+                                                    width: 24,
+                                                    height: 24,
+                                                    fill: "#6e7781",
+                                                    icon: BsArrowUpShort,
+                                                }
                                             }
                                         }
                                     }
@@ -366,7 +376,12 @@ fn RenderSetting() -> Element {
                 }
             },
             span { class: "icon has-text-light",
-                Icon { width: 24, height: 24, fill: "#6e7781", icon: BsGear }
+                Icon {
+                    width: 24,
+                    height: 24,
+                    fill: "#6e7781",
+                    icon: BsGear,
+                }
             }
             span { "setting" }
         }
@@ -384,7 +399,7 @@ fn RenderSetting() -> Element {
                         };
                         save_configuration(&conf);
                         configuration.set(conf);
-                    }
+                    },
                 }
             }
             div { class: "column is-6",
@@ -400,7 +415,7 @@ fn RenderSetting() -> Element {
                         };
                         save_configuration(&conf);
                         configuration.set(conf);
-                    }
+                    },
                 }
             }
         }
@@ -426,7 +441,12 @@ fn RenderNav() -> Element {
                         target: "_blank",
                         href: "https://github.com/fairjm/dioxus-openai-qa-gui",
                         span { class: "icon is-small",
-                            Icon { width: 24, height: 24, fill: "#6e7781", icon: FaGithub }
+                            Icon {
+                                width: 24,
+                                height: 24,
+                                fill: "#6e7781",
+                                icon: FaGithub,
+                            }
                         }
                         span { "GitHub" }
                     }
@@ -437,7 +457,7 @@ fn RenderNav() -> Element {
 }
 
 #[component]
-fn SystemPrompt() -> Element {
+fn SystemPromptComponent() -> Element {
     rsx!(
         h3 { "system prompt list" }
         div { class: "select",
@@ -451,7 +471,7 @@ fn SystemPrompt() -> Element {
                 class: "textarea",
                 r#"type"#: "text",
                 readonly: true,
-                placeholder: "select a prompt"
+                placeholder: "select a prompt",
             }
         }
         div { class: "control",
@@ -522,7 +542,7 @@ fn DropdownItem() -> Element {
                                 .filter(|each| each.name != each_prompt.name)
                                 .collect::<Vec<&SystemPrompt>>();
                             save_system_prompts(system_prompts_read_filtered)
-                        }
+                        },
                     }
                 }
             }
