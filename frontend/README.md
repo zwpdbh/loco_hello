@@ -36,7 +36,7 @@ Based on the `Dioxus.toml` file definition for css
 style = ["/tailwind.css"]
 ```
 
-Generate the tailwind.css file given `tailwind.config.js` and `input.css` is prepared from Dioxus, we only need to run: 
+Given both `tailwind.config.js` and `input.css` are already prepared from Dioxus, to generate the tailwind.css file we only need to run: 
 
 ```sh
 npx tailwindcss -i ./input.css -o ./tailwind.css --watch

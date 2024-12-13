@@ -70,3 +70,12 @@ channel = "stable"
 
 - Run `rustup update stable`
 - Run `cargo clean && cargo install sea-orm-cli`
+
+### Blocking waiting for file lock on package cache
+
+```sh 
+rm ~/.cargo/.package-cache
+# optional 
+rustup update
+cargo clean
+```

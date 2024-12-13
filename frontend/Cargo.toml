@@ -9,7 +9,7 @@ edition = "2021"
 [dependencies]
 
 # region:      --- comment packages shared in workspace
-dioxus = { version = "0.5", features = ["web", "router"] }
+dioxus = { version = "0.6", features = ["web", "router"] }
 serde = { workspace = true }
 serde_json = { workspace = true }
 futures-util = { workspace = true }
@@ -21,10 +21,10 @@ dioxus-sortable = { version = "0.1.2" }
 
 
 gloo-timers = { version = "0.3", features = ["futures"] }
-dioxus-free-icons = { version = "0.8.0", features = [
+dioxus-free-icons = { version = "0.9", features = [
   "font-awesome-brands",
   "bootstrap",
 ] }
 
 # Debug
-dioxus-logger = "0.5.1"
+dioxus-logger = "0.6"
