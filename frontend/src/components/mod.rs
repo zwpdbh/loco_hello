@@ -10,7 +10,7 @@ pub use form::*;
 #[component]
 pub fn Home() -> Element {
     rsx!(
-        h1 { "Welcome to the Dioxus!" }
+        h1 { "This is home page" }
     )
 }
 

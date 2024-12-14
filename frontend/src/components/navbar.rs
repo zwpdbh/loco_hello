@@ -5,42 +5,41 @@ use dioxus::prelude::*;
 #[component]
 pub fn NavBar() -> Element {
     rsx!(
-        nav {
-            "aria-label": "main navigation",
-            role: "navigation",
-            class: "navbar",
-
-            div { class: "navbar-menu", id: "navbarBasicExample",
-                div { class: "navbar-start",
-                    Link { class: "navbar-item", to: Route::Home {}, "Home" }
-                    Link { class: "navbar-item", to: Route::PostList {},
-                        {},
-                        "Blog List"
-                    }
-                    Link { class: "navbar-item", to: Route::DemoMenuDefault {},
-                        {},
-                        "Demos"
-                    }
-                    div { class: "navbar-item has-dropdown is-hoverable",
-                        a { class: "navbar-link", "More" }
-                        div { class: "navbar-dropdown",
-                            a { class: "navbar-item", "About" }
-                            a { class: "navbar-item is-selected", "Jobs" }
-                            a { class: "navbar-item", "Contact" }
-                            hr { class: "navbar-divider" }
-                            a { class: "navbar-item", "Report an issue" }
+        header { class: "bg-white",
+            nav { class: "flex items-center justify-between w-[92%]  mx-auto",
+                div { class: "w-16",
+                    p { class: "uppercase font-semibold", "acstor" }
+                }
+                div {
+                    ul { class: "flex items-center gap-[4vw]",
+                        li {
+                            Link {
+                                class: "hover:text-gray-500",
+                                to: Route::Home {},
+                                "Home"
+                            }
+                        }
+                        li {
+                            Link {
+                                class: "hover:text-gray-500",
+                                to: Route::DemoMenuDefault {},
+                                "Demos"
+                            }
+                        }
+                        li {
+                            Link {
+                                class: "hover:text-gray-500",
+                                to: Route::PostList {},
+                                "Blog List"
+                            }
+                        }
+                        li {
+                            a { class: "hover:text-gray-500", "More" }
                         }
                     }
                 }
-                div { class: "navbar-end",
-                    div { class: "navbar-item",
-                        div { class: "buttons",
-                            a { class: "button is-primary",
-                                strong { "Sign up" }
-                            }
-                            a { class: "button is-light", "Log in" }
-                        }
-                    }
+                div {
+                    button { class: "hover:text-gray-500", "Sign In " }
                 }
             }
         }
