@@ -25,6 +25,9 @@ dioxus-free-icons = { version = "0.9", features = [
 
 # endregion:   --- Added by user 
 
+[dev-dependencies]
+dioxus-cli = { version = "0.6" }
+
 
 [features]
 default = ["web"]
@@ -32,6 +35,14 @@ web = ["dioxus/web"]
 desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]
 
+[profile]
 
-[dev-dependencies]
-dioxus-cli = { version = "0.6" }
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
