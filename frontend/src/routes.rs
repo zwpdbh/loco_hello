@@ -2,8 +2,8 @@
 use dioxus::prelude::*;
 
 use crate::components::*;
-use crate::pages::blog::*;
-use crate::pages::demos::*;
+use crate::views::blog::*;
+use crate::views::demos::*;
 
 #[rustfmt::skip]
 #[derive(Clone, Routable, Debug, PartialEq)]

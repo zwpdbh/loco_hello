@@ -5,8 +5,8 @@ use routes::Route;
 
 mod components;
 mod error;
-mod pages;
 mod routes;
+mod views;
 
 const FAVICON: Asset = asset!("./assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("./assets/styling/main.css");
