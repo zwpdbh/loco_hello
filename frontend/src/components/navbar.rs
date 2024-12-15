@@ -12,30 +12,16 @@ pub fn NavBar() -> Element {
                 }
                 div {
                     ul { class: "flex items-center gap-[4vw]",
-                        li {
-                            Link {
-                                class: "hover:text-gray-500",
-                                to: Route::Home {},
-                                "Home"
-                            }
+                        NavBarItem { label: "Home", route: Some(Route::Home {}) }
+                        NavBarItem {
+                            label: "Demos",
+                            route: Some(Route::DemoMenuDefault {}),
                         }
-                        li {
-                            Link {
-                                class: "hover:text-gray-500",
-                                to: Route::DemoMenuDefault {},
-                                "Demos"
-                            }
+                        NavBarItem {
+                            label: "Blog List",
+                            route: Some(Route::PostList {}),
                         }
-                        li {
-                            Link {
-                                class: "hover:text-gray-500",
-                                to: Route::PostList {},
-                                "Blog List"
-                            }
-                        }
-                        li {
-                            a { class: "hover:text-gray-500", "More" }
-                        }
+                        NavBarItem { label: "More", route: None }
                     }
                 }
                 div {
@@ -47,4 +33,21 @@ pub fn NavBar() -> Element {
         // The Outlet component will render child routes (In this case just the Home component) inside the Outlet component
         Outlet::<Route> {}
     )
+}
+
+#[component]
+fn NavBarItem(label: &'static str, route: Option<Route>) -> Element {
+    let class = "hover:text-gray-500";
+    match route {
+        Some(r) => rsx!(
+            li {
+                Link { to: r, class, "{label}" }
+            }
+        ),
+        None => rsx!(
+            li {
+                a { class, "{label}" }
+            }
+        ),
+    }
 }

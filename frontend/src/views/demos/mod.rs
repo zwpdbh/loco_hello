@@ -32,9 +32,11 @@ const SIDEBAR_CSS: Asset = asset!("/assets/styling/sidebar.css");
 #[component]
 pub fn Demo() -> Element {
     rsx!(
-        div { class: "columns",
-            div { class: "column is-one-fifth", DemoMenu {} }
-            div { class: "column", Outlet::<Route> {} }
+        div { class: "flex h-screen",
+            div {
+                div { class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto", DemoMenu {} }
+            }
+            div { class: "flex-1 p-4 overflow-auto", Outlet::<Route> {} }
         }
     )
 }
@@ -50,8 +52,6 @@ fn DemoMenu() -> Element {
     rsx!(
         document::Link { rel: "stylesheet", href: SIDEBAR_CSS }
         aside {
-            class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto",
-            class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto",
             MenuSection {
                 title: "General",
                 items: vec![
@@ -130,7 +130,7 @@ fn MyCard(children: Element) -> Element {
     rsx!(
         div {
             div {
-                // Notice the children is placed inside "{}"
+                // Notice the children is placed inside "{{}}"
                 div { {children} }
             }
         }
