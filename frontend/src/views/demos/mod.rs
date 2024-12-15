@@ -49,85 +49,80 @@ pub fn DemoMenuDefault() -> Element {
 fn DemoMenu() -> Element {
     rsx!(
         document::Link { rel: "stylesheet", href: SIDEBAR_CSS }
-        aside { class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto",
-            p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "General" }
-            ul { class: "space-y-1 mb-4",
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::RsxBasic {}, "RsxBasic" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoProp {}, "Prop" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoEventHandler {}, "Event Handler" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoHooks {}, "Hooks" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::UserInput {}, "User Input" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoContext {}, "Context" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoDynamicRendering {}, "Dynamic Rendering" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoResource {}, "Async with Resource" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoCoroutines {}, "Async with Coroutines" }
-                }
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoSpawn {}, "Async with Spawn" }
-                }
+        aside {
+            class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto",
+            class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto",
+            MenuSection {
+                title: "General",
+                items: vec![
+                    ("RsxBasic", Some(Route::RsxBasic {})),
+                    ("Prop", Some(Route::DemoProp {})),
+                    ("Event Handler", Some(Route::DemoEventHandler {})),
+                    ("Hooks", Some(Route::DemoHooks {})),
+                    ("User Input", Some(Route::UserInput {})),
+                    ("Context", Some(Route::DemoContext {})),
+                    ("Dynamic Rendering", Some(Route::DemoDynamicRendering {})),
+                    ("Async with Resource", Some(Route::DemoResource {})),
+                    ("Async with Coroutines", Some(Route::DemoCoroutines {})),
+                    ("Async with Spawn", Some(Route::DemoSpawn {})),
+                ],
             }
-            p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "LLM service" }
-            ul {
-                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                    Link { to: Route::DemoLLM {}, "LLM service" }
-                }
+            MenuSection {
+                title: "LLM service",
+                items: vec![("LLM service", Some(Route::DemoLLM {}))],
             }
-            p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "ACStor CRUD" }
-            ul {
-                li {
-                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Team Settings" }
-                }
-                li {
-                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Manage Your Team" }
-                    ul {
-                        li {
-                            a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                                "Members"
-                            }
-                        }
-                        li {
-                            a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                                "Plugins"
-                            }
-                        }
-                        li {
-                            a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                                "Add a member"
-                            }
-                        }
-                    }
-                }
-                li {
-                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Invitations" }
-                }
-                li {
-                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
-                        "Cloud Storage Environment Settings"
-                    }
-                }
-                li {
-                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Authentication" }
-                }
+            MenuSection {
+                title: "ACStor CRUD",
+                items: vec![
+                    ("Team Settings", None),
+                    ("Manage Your Team", None),
+                    ("Invitations", None),
+                    ("Cloud Storage Environment Settings", None),
+                    ("Authentication", None),
+                ],
+            }
+
+            // Submenu for "Manage Your Team"
+            p { class: "text-gray-500 text-xs uppercase font-semibold mt-2 mb-1",
+                "Manage Your Team"
+            }
+            ul { class: "ml-4 space-y-1",
+                MenuItem { label: "Members" }
+                MenuItem { label: "Plugins" }
+                MenuItem { label: "Add a member" }
             }
         }
     )
+}
+
+#[component]
+fn MenuSection(title: &'static str, items: Vec<(&'static str, Option<Route>)>) -> Element {
+    rsx!(
+        p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "{title}" }
+
+        ul { class: "space-y-1 mb-4",
+            for (label , route) in items {
+                MenuItem { label, route }
+            }
+        }
+    )
+}
+
+#[component]
+fn MenuItem(label: &'static str, route: Option<Route>) -> Element {
+    let class = "block hover:bg-gray-200 px-2 py-1 rounded";
+    match route {
+        Some(r) => rsx!(
+            li {
+                Link { to: r, class, "{label}" }
+            }
+        ),
+        None => rsx!(
+            li {
+                a { class, "{label}" }
+            }
+        ),
+    }
 }
 
 #[component]
