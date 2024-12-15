@@ -26,13 +26,17 @@ pub use prop::DemoProp;
 pub use rsx_basic::RsxBasic;
 pub use user_input::UserInput;
 
+const SIDEBAR_CSS: Asset = asset!("/assets/styling/sidebar.css");
+
 /// Place holder for Demo section
 #[component]
 pub fn Demo() -> Element {
     rsx!(
-        div { class: "columns",
-            div { class: "column is-one-fifth", DemoMenu {} }
-            div { class: "column", Outlet::<Route> {} }
+        div { class: "flex h-screen",
+            div {
+                div { class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto", DemoMenu {} }
+            }
+            div { class: "flex-1 p-4 overflow-auto", Outlet::<Route> {} }
         }
     )
 }
@@ -46,85 +50,88 @@ pub fn DemoMenuDefault() -> Element {
 #[component]
 fn DemoMenu() -> Element {
     rsx!(
-        aside { class: "menu",
-            p { class: "menu-label", "General" }
-            ul { class: "menu-list",
-                li {
-                    Link { to: Route::RsxBasic {}, "RsxBasic" }
-                }
-                li {
-                    Link { to: Route::DemoProp {}, "Prop" }
-                }
-                li {
-                    Link { to: Route::DemoEventHandler {}, "Event Handler" }
-                }
-                li {
-                    Link { to: Route::DemoHooks {}, "Hooks" }
-                }
-                li {
-                    Link { to: Route::UserInput {}, "User Input" }
-                }
-                li {
-                    Link { to: Route::DemoContext {}, "Context" }
-                }
-                li {
-                    Link { to: Route::DemoDynamicRendering {}, "Dynamic Rendering" }
-                }
-                li {
-                    Link { to: Route::DemoResource {}, "Async with Resource" }
-                }
-                li {
-                    Link { to: Route::DemoCoroutines {}, "Async with Coroutines" }
-                }
-                li {
-                    Link { to: Route::DemoSpawn {}, "Async with Spawn" }
-                }
+        document::Link { rel: "stylesheet", href: SIDEBAR_CSS }
+        aside {
+            MenuSection {
+                title: "General",
+                items: vec![
+                    ("RsxBasic", Some(Route::RsxBasic {})),
+                    ("Prop", Some(Route::DemoProp {})),
+                    ("Event Handler", Some(Route::DemoEventHandler {})),
+                    ("Hooks", Some(Route::DemoHooks {})),
+                    ("User Input", Some(Route::UserInput {})),
+                    ("Context", Some(Route::DemoContext {})),
+                    ("Dynamic Rendering", Some(Route::DemoDynamicRendering {})),
+                    ("Async with Resource", Some(Route::DemoResource {})),
+                    ("Async with Coroutines", Some(Route::DemoCoroutines {})),
+                    ("Async with Spawn", Some(Route::DemoSpawn {})),
+                ],
             }
-            p { class: "menu-label", "LLM service" }
-            ul { class: "menu-list",
-                li {
-                    Link { to: Route::DemoLLM {}, "LLM service" }
-                }
+            MenuSection {
+                title: "LLM service",
+                items: vec![("LLM service", Some(Route::DemoLLM {}))],
             }
-            p { class: "menu-label", "ACStor CRUD" }
-            ul { class: "menu-list",
-                li {
-                    a { "Team Settings" }
-                }
-                li {
-                    a { "Manage Your Team" }
-                    ul {
-                        li {
-                            a { "Members" }
-                        }
-                        li {
-                            a { "Plugins" }
-                        }
-                        li {
-                            a { "Add a member" }
-                        }
-                    }
-                }
-                li {
-                    a { "Invitations" }
-                }
-                li {
-                    a { "Cloud Storage Environment Settings" }
-                }
-                li {
-                    a { "Authentication" }
-                }
+            MenuSection {
+                title: "ACStor CRUD",
+                items: vec![
+                    ("Team Settings", None),
+                    ("Manage Your Team", None),
+                    ("Invitations", None),
+                    ("Cloud Storage Environment Settings", None),
+                    ("Authentication", None),
+                ],
+            }
+
+            // Submenu for "Manage Your Team"
+            p { class: "text-gray-500 text-xs uppercase font-semibold mt-2 mb-1",
+                "Manage Your Team"
+            }
+            ul { class: "ml-4 space-y-1",
+                MenuItem { label: "Members" }
+                MenuItem { label: "Plugins" }
+                MenuItem { label: "Add a member" }
             }
         }
     )
 }
 
 #[component]
+fn MenuSection(title: &'static str, items: Vec<(&'static str, Option<Route>)>) -> Element {
+    rsx!(
+        p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "{title}" }
+
+        ul { class: "space-y-1 mb-4",
+            for (label , route) in items {
+                MenuItem { label, route }
+            }
+        }
+    )
+}
+
+#[component]
+fn MenuItem(label: &'static str, route: Option<Route>) -> Element {
+    let class = "block hover:bg-gray-200 px-2 py-1 rounded";
+    match route {
+        Some(r) => rsx!(
+            li {
+                Link { to: r, class, "{label}" }
+            }
+        ),
+        None => rsx!(
+            li {
+                a { class, "{label}" }
+            }
+        ),
+    }
+}
+
+#[component]
 fn MyCard(children: Element) -> Element {
     rsx!(
-        div { class: "card",
-            div { class: "card-content",
-                div { class: "content", { children } }
+        div {
+            div {
+                // Notice the children is placed inside "{{}}"
+                div { {children} }
             }
         }
     )
