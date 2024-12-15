@@ -26,6 +26,8 @@ pub use prop::DemoProp;
 pub use rsx_basic::RsxBasic;
 pub use user_input::UserInput;
 
+const SIDEBAR_CSS: Asset = asset!("/assets/styling/sidebar.css");
+
 /// Place holder for Demo section
 #[component]
 pub fn Demo() -> Element {
@@ -46,73 +48,82 @@ pub fn DemoMenuDefault() -> Element {
 #[component]
 fn DemoMenu() -> Element {
     rsx!(
-        aside { class: "menu",
-            p { class: "menu-label", "General" }
-            ul { class: "menu-list",
-                li {
+        document::Link { rel: "stylesheet", href: SIDEBAR_CSS }
+        aside { class: "w-64 h-screen bg-gray-100 p-4 overflow-y-auto",
+            p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "General" }
+            ul { class: "space-y-1 mb-4",
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::RsxBasic {}, "RsxBasic" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoProp {}, "Prop" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoEventHandler {}, "Event Handler" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoHooks {}, "Hooks" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::UserInput {}, "User Input" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoContext {}, "Context" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoDynamicRendering {}, "Dynamic Rendering" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoResource {}, "Async with Resource" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoCoroutines {}, "Async with Coroutines" }
                 }
-                li {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoSpawn {}, "Async with Spawn" }
                 }
             }
-            p { class: "menu-label", "LLM service" }
-            ul { class: "menu-list",
-                li {
+            p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "LLM service" }
+            ul {
+                li { class: "block hover:bg-gray-200 px-2 py-1 rounded",
                     Link { to: Route::DemoLLM {}, "LLM service" }
                 }
             }
-            p { class: "menu-label", "ACStor CRUD" }
-            ul { class: "menu-list",
+            p { class: "text-gray-500 text-xs uppercase font-semibold mb-2", "ACStor CRUD" }
+            ul {
                 li {
-                    a { "Team Settings" }
+                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Team Settings" }
                 }
                 li {
-                    a { "Manage Your Team" }
+                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Manage Your Team" }
                     ul {
                         li {
-                            a { "Members" }
+                            a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
+                                "Members"
+                            }
                         }
                         li {
-                            a { "Plugins" }
+                            a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
+                                "Plugins"
+                            }
                         }
                         li {
-                            a { "Add a member" }
+                            a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
+                                "Add a member"
+                            }
                         }
                     }
                 }
                 li {
-                    a { "Invitations" }
+                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Invitations" }
                 }
                 li {
-                    a { "Cloud Storage Environment Settings" }
+                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded",
+                        "Cloud Storage Environment Settings"
+                    }
                 }
                 li {
-                    a { "Authentication" }
+                    a { class: "block hover:bg-gray-200 px-2 py-1 rounded", "Authentication" }
                 }
             }
         }
@@ -122,9 +133,10 @@ fn DemoMenu() -> Element {
 #[component]
 fn MyCard(children: Element) -> Element {
     rsx!(
-        div { class: "card",
-            div { class: "card-content",
-                div { class: "content", { children } }
+        div {
+            div {
+                // Notice the children is placed inside "{}"
+                div { {children} }
             }
         }
     )
